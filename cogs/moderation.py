@@ -32,6 +32,7 @@ class Moderation(commands.Cog):
         await ctx.respond(f"<@{member.id}> has been banned from **{ctx.guild}**\nReason:{reason}")
 
     @discord.slash_command(name="timeout", description="It timesout the user")
+    @commands.has_permissions(moderate_members = True)
     async def timeout(self, ctx, member: Option(discord.Member, description="Whom to time out"), reason:Option(str, description="Reason", required=False), days:Option(int, description="Amount of days you want to timeout the user", max_value=28, required=False), hours:Option(int, description="Amount of hours you want to timeout the user", max_value=23, required=False), minutes:Option(int, description="Amount of minutes to time out someone", max_value=59, required=False), seconds:Option(int, description="Amount of seconds to time out someone", max_value=59, required=False)):
         if member.timed_out == True:
             await ctx.respond("You can not timed out some one who is already timedout")
@@ -53,6 +54,12 @@ class Moderation(commands.Cog):
         await member.timeout_for(duration)
         await ctx.respond(f"<@{member.id}> has been timed out for {days} Days, {hours} Hours, {minutes} Minutes, {seconds} Seconds\nReason: {reason}")
         
+    @timeout.error
+    async def timeouterror(ctx, error):
+        if isinstance(error, MissingPermissions):
+            await ctx.respond(f"You do not have the permissions to do this command")
+        else:
+            raise error
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
