@@ -2,7 +2,7 @@ import discord
 import os
 import logging
 
-token = os.environ['token']
+#token = os.environ['token']
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -28,4 +28,4 @@ for cog in cogList:
   bot.load_extension(f'cogs.{cog}')
   print(f"Loaded {cog}.py")
 
-bot.run(token)
+bot.run("MTExNTY0MTQyMTY1MTc4NzgzNg.GOYjxU.57VoHKzxGu-qjJZRcnyWsb_FDJn3aTkAGPMbSs")
