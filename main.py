@@ -9,7 +9,7 @@ async def on_ready():
 
 cogList = [
     'dev',
-    'fun'
+    'moderation'
 ]
 
 print("Loading Cogs")
