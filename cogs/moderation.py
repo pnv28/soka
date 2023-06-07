@@ -7,7 +7,7 @@ class Moderation(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-
+    f
     @discord.slash_command(name="kick", description="Kicks a user from a server")
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member:Option(discord.Member, description="Who to kick"), reason:Option(str, description="Reason", required=False)):
