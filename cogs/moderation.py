@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord import Option
 from discord.ext.commands import MissingPermissions
 from datetime import timedelta
+import asyncio
 
 class Moderation(commands.Cog):
     
@@ -77,9 +78,21 @@ class Moderation(commands.Cog):
             raise error
 
     @discord.slash_command(name="purge", description="Deletes number of specified messages")
-    async def purge(self, ctx, purgeNo: Option(int, description("Number of messages to purge"))):
-        await delete(purgeNo)
-        await ctx.respond("Deleted messages")
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def purge(self, ctx, no: Option(int, description="Number of messages to purge")):
+        await ctx.defer()
+        z = await ctx.channel.purge(limit = no)
+        await asyncio.sleep(2)
+    
+    @purge.error
+    async def purgeerror(ctx, error):
+        if isinstance(eror, MissingPermissions):
+            await ctx.respond(f"You do not have the permissions to do this command")
+        elif isinstance(error, commands.CommandOnCooldown):
+            await ctx.respond(error)
+        else:
+            raise error
+
 
 
 def setup(bot):
