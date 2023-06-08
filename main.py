@@ -18,7 +18,7 @@ async def on_ready():
   print(f"{bot.user} is ready and online")
 
 
-cogList = ['dev', 'moderation']
+cogList = ['dev', 'moderation', 'fun']
 
 print("Loading Cogs")
 for cog in cogList:

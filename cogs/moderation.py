@@ -20,6 +20,13 @@ class Moderation(commands.Cog):
         await member.kick(reason=reason)
         await ctx.respond(f"<@{member.id}> has been kick from **{ctx.guild}**\nReason:{reason}") 
     
+    @kick.error
+    async def kick(ctx, error):
+        if isinstance(error, MissingPermissions):
+            await ctx.respond("You do not have permission to run that command")
+        else:
+            raise error
+
     @discord.slash_command(name="ban", description="Bans an user")
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member:Option(discord.Member, description="Who to ban"), reason:Option(str, description="Reason", required=False)):
@@ -30,6 +37,14 @@ class Moderation(commands.Cog):
             reason = f"No reason provided by the user <@{ctx.author.id}>"
         await member.ban(reason=reason)
         await ctx.respond(f"<@{member.id}> has been banned from **{ctx.guild}**\nReason:{reason}")
+
+    @ban.error
+    async def banerror(ctx, error):
+        if isinstance(error, MissingPermissions):
+            await ctx.respond("You do not have permission to run that command")
+        else:
+            raise error
+
 
     @discord.slash_command(name="timeout", description="It timesout the user")
     @commands.has_permissions(moderate_members = True)
