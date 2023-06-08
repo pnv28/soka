@@ -76,5 +76,11 @@ class Moderation(commands.Cog):
         else:
             raise error
 
+    @discord.slash_command(name="purge", description="Deletes number of specified messages")
+    async def purge(self, ctx, purgeNo: Option(int, description("Number of messages to purge"))):
+        await delete(purgeNo)
+        await ctx.respond("Deleted messages")
+
+
 def setup(bot):
     bot.add_cog(Moderation(bot))
