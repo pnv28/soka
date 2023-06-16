@@ -1,6 +1,9 @@
 import discord
 import os
 import logging
+from discord.ext import commands
+from discord.ext.commands import MissingPermissions
+
 
 #token = os.environ['token']
 
@@ -17,6 +20,14 @@ bot = discord.Bot()
 async def on_ready():
   print(f"{bot.user} is ready and online")
 
+@bot.event
+async def on_application_command_error(ctx, error):
+  if isinstance(error, commands.CommandOnCooldown):
+    await ctx.respond(error)
+  if isinstance(error, MissingPermissions):
+    await ctx.respond("You do not have permission to run that command")
+  else:
+    raise error
 
 cogList = ['dev', 'moderation', 'fun']
 
