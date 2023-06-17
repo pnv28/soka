@@ -30,7 +30,6 @@ async def on_application_command_error(ctx, error):
     raise error
 
 cogList = ['dev', 'moderation', 'fun']
-
 print("Loading Cogs")
 for cog in cogList:
   bot.load_extension(f'cogs.{cog}')
