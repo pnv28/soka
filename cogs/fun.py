@@ -1,37 +1,36 @@
 import discord
 from discord import Option
 from discord.ext import commands
-from requests import get
-import json
 from googletrans import Translator, constants
-from pprint import pprint
 from discord import Option
 import aiohttp
 import random
 import requests
 import json
 import nekos
+import anime_images_api
+anime = anime_images_api.Anime_Images()
 
-
+color = discord.Color.from_rgb(255, 192, 203)
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @discord.slash_command(name="translate", description="Uses google translate")
-    async def translate(self, ctx, text:Option(str, description="Text to translate")):
+    @discord.message_command(name="Translate message to English")
+    async def translate(self, ctx, message: discord.Message):
         translator = Translator()
-        translation = translator.translate(text)
+        translation = translator.translate(message.content)
         translateEmbed = discord.Embed(
             title="Translation",
             description=f"""
             From ({translation.src})
-            ```{text}```
+            ```{message.content}```
 
             To ({translation.dest})
             ```{translation.text}```
             
             """,
-            color = discord.Color.from_rgb(255, 192, 203)
+            color = color
         )
         await ctx.respond(embed = translateEmbed)
 
@@ -43,7 +42,7 @@ class Fun(commands.Cog):
                 memes = await r.json()
                 memeEmbed = discord.Embed(
                     title=memes["data"]["children"][rand]["data"]["title"],
-                    color = discord.Color.from_rgb(255, 192, 203)
+                    color = color
                 )
                 memeEmbed.set_image(url=memes["data"]["children"][rand]["data"]["url"])
                 memeEmbed.set_footer(text=f"Memes by r/memes | Requested by {ctx.author}")
@@ -59,7 +58,7 @@ class Fun(commands.Cog):
         
         embed = discord.Embed(
             title = f"Avatar",
-            color = discord.Color.from_rgb(255, 192, 203)
+            color = color
         )
         embed.set_image(url=avatarURL)
         await ctx.respond(embed = embed)
@@ -68,32 +67,6 @@ class Fun(commands.Cog):
     async def random_fact(self, ctx):
         fact = nekos.fact()
         await ctx.respond(fact)
-
-    @discord.slash_command(name="anime_quote", description="Fetches a random quote")
-    async def random_quotes(self, ctx):
-        response = requests.get("https://kyoko.rei.my.id/api/quotes.php")
-        quote = response.json()["apiResult"][0]["english"]
-        author = response.json()["apiResult"][0]["character"]
-        anime = response.json()["apiResult"][0]["anime"]
-        quoteEmbed = discord.Embed(
-            title=f"Quote from {anime}",
-            description = f"```{quote} - {author}```",
-            color = discord.Color.from_rgb(255, 192, 203)
-
-        )
-        await ctx.respond(embed = quoteEmbed)
-    
-    @discord.slash_command(name="kill", description="Fake Kills the specified user with Anime Gifs")
-    async def kill(self, ctx, user: Option(discord.Member, description="The user to fake kill")):
-        response = requests.get("https://kyoko.rei.my.id/api/kill.php")
-        gif = response.json()["apiResult"]["url"][0]
-        killEmbed = discord.Embed(
-            title= f"{ctx.author.mention} killed {user.mention}",
-            color = discord.Color.from_rgb(255, 192, 203)
-        )
-        killEmbed.set_image(url=gif)
-        await ctx.respond(gif)
-        
 
 
 def setup(bot):
