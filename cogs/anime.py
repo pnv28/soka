@@ -77,7 +77,6 @@ class Anime(commands.Cog):
             description=synopsis
         )
         infoEmbed.set_thumbnail(url = image)
-        infoEmbed.set_footer("Information by Animelist")
         infoEmbed.add_field(name="Status", value=status, inline=True)
         infoEmbed.add_field(name="Date", value=airing, inline=True)
         infoEmbed.add_field(name="Demographics", value=animeType, inline=True)
