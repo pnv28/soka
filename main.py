@@ -31,10 +31,10 @@ async def on_application_command_error(ctx, error):
 
 @bot.slash_command(name= "ping", description= "Responds with Pong!")
 async def ping(ctx):
-  await ctx.respond(f"Pong! Latency is {bot.latency} ms")
+  await ctx.respond(f"Pong! Latency is {round(bot.latency * 1000)} ms")
 
 
-cogList = ['dev', 'moderation', 'fun', 'anime']
+cogList = ['dev', 'moderation', 'fun', 'anime', 'misc']
 print("Loading Cogs")
 for cog in cogList:
   bot.load_extension(f'cogs.{cog}')

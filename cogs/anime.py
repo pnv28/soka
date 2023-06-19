@@ -77,7 +77,7 @@ class Anime(commands.Cog):
             description=synopsis
         )
         infoEmbed.set_thumbnail(url = image)
-        infoEmbed.set_footer(text=f"Requested by {ctx.author}")
+        infoEmbed.set_footer("Information by Animelist")
         infoEmbed.add_field(name="Status", value=status, inline=True)
         infoEmbed.add_field(name="Date", value=airing, inline=True)
         infoEmbed.add_field(name="Demographics", value=animeType, inline=True)
@@ -92,7 +92,7 @@ class Anime(commands.Cog):
             color= color
         )
         killEmbed.set_image(url=gif)
-        await ctx.respond(embed = killEmbed)
+        await ctx.respond(user.mention, embed = killEmbed)
     
     @images.command(name="pat", description="Fake Hugs the specified user with Anime Gifs")
     async def pat(self, ctx, user: Option(discord.Member, description="To fake pat a user")):
@@ -105,7 +105,7 @@ class Anime(commands.Cog):
             color= color
         )
         patEmbed.set_image(url = gif)
-        await ctx.respond(embed = patEmbed)
+        await ctx.respond(user.mention, embed = patEmbed)
 
     @images.command(name="slap", description="Fake Slaps the specified users with anime slaps")
     async def slap(slef, ctx, user: Option(discord.Member, description="Person to fake slap")):
@@ -115,7 +115,7 @@ class Anime(commands.Cog):
             color=color
         )
         slapEmbed.set_image(url = gif)
-        await ctx.respond(embed = slapEmbed)
+        await ctx.respond(user.mention, embed = slapEmbed)
 
     # @images.command(name="cuddle", description="Fake cuddles the specified user with anime cuddles")
     # async def cuddle(self, ctx, user: Option(discord.Member, description="Fake Cuddle")):
