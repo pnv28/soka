@@ -66,7 +66,6 @@ class Anime(commands.Cog):
         status = data["status"]
         airing = data["aired"]["string"]
         synopsis = data["synopsis"]
-        animeType = data["demographics"][0]["name"]
         episodes = data["episodes"]
         if(episodes == None):
             episodes="Not Sure"
@@ -79,7 +78,6 @@ class Anime(commands.Cog):
         infoEmbed.set_thumbnail(url = image)
         infoEmbed.add_field(name="Status", value=status, inline=True)
         infoEmbed.add_field(name="Date", value=airing, inline=True)
-        infoEmbed.add_field(name="Demographics", value=animeType, inline=True)
         infoEmbed.add_field(name="Episodes", value=episodes, inline=True)
         await ctx.respond(embed=infoEmbed)
 
