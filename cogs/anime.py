@@ -15,7 +15,6 @@ class Anime(commands.Cog):
     
     anime = SlashCommandGroup("anime", "commands related to anime")
     images = SlashCommandGroup("images", "Slap, Kill, Pat, etc. anime images")
-    # @discord.slash_command(name="anime_quote", description="Fetches a random quote")
     @anime.command(description="Gives a random anime quote")
     async def random_quote(self, ctx):
         response = requests.get("https://kyoko.rei.my.id/api/quotes.php")
@@ -30,17 +29,47 @@ class Anime(commands.Cog):
         )
         await ctx.respond(embed = quoteEmbed)
     
+    @anime.command(description="Searches Anime and shows basic Info of the query")
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def search(self, ctx, query: Option(str, description="Search Query")):
+        response = requests.get(f"https://api.jikan.moe/v4/anime?q={query}")
+        data = response.json()["data"]
+        one = data[0]
+        two = data[1]
+        three = data[2]
+        four = data[3]
+        five = data[4]
+        searchEmbed = discord.Embed(
+            title= f"Search Results for {query}",
+            color= color,
+            description=f"""
+            **Note, For More Information about the Anime Use `/anime information anime:Query`**
+            ```1.{one["titles"][0]["title"]}```
+            ```2.{two["titles"][0]["title"]}```
+            ```3.{three["titles"][0]["title"]}```
+            ```4.{four["titles"][0]["title"]}```
+            ```5.{five["titles"][0]["title"]}```
+            """
+        )
+        await ctx.respond(embed = searchEmbed)
+        
+
+
+
     @anime.command(description="Gives Information about specified anime")
     @commands.cooldown(1, 15, commands.BucketType.user)
     async def information(self, ctx, anime: Option(str, description="Name of the anime")):
-        response = requests.get(f"https://kyoko.rei.my.id/api/myanimelist.php?q={anime}")
-        data = response.json()["apiResult"]
+        response = requests.get(f"https://api.jikan.moe/v4/anime?q={anime}")
+        data = response.json()["data"][0]
         image = data["images"]["jpg"]["image_url"]
         title = data["titles"][0]["title"]
         status = data["status"]
         airing = data["aired"]["string"]
         synopsis = data["synopsis"]
         animeType = data["demographics"][0]["name"]
+        episodes = data["episodes"]
+        if(episodes == None):
+            episodes="Not Sure"
 
         infoEmbed = discord.Embed(
             title=title,
@@ -52,6 +81,7 @@ class Anime(commands.Cog):
         infoEmbed.add_field(name="Status", value=status, inline=True)
         infoEmbed.add_field(name="Date", value=airing, inline=True)
         infoEmbed.add_field(name="Demographics", value=animeType, inline=True)
+        infoEmbed.add_field(name="Episodes", value=episodes, inline=True)
         await ctx.respond(embed=infoEmbed)
 
     @images.command(name="kill", description="Fake Kills the specified user with Anime Gifs")
@@ -87,15 +117,15 @@ class Anime(commands.Cog):
         slapEmbed.set_image(url = gif)
         await ctx.respond(embed = slapEmbed)
 
-    @images.command(name="cuddle", description="Fake cuddles the specified user with anime cuddles")
-    async def cuddle(self, ctx, user: Option(discord.Member, description="Fake Cuddle")):
-        gif = anime.get_sfw('cuddle')
-        cuddleEmbed = discord.Embed(
-            title=f"{ctx.author} cuddles {user}",
-            color=color
-        )
-        cuddleEmbed.set_image(url = gif)
-        await ctx.respond(embed = cuddleEmbed)
+    # @images.command(name="cuddle", description="Fake cuddles the specified user with anime cuddles")
+    # async def cuddle(self, ctx, user: Option(discord.Member, description="Fake Cuddle")):
+    #     gif = anime.get_sfw('cuddle')
+    #     cuddleEmbed = discord.Embed(
+    #         title=f"{ctx.author} cuddles {user}",
+    #         color=color
+    #     )
+    #     cuddleEmbed.set_image(url = gif)
+    #     await ctx.respond(embed = cuddleEmbed)
         
     
         
