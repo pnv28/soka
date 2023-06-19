@@ -40,5 +40,5 @@ for cog in cogList:
   bot.load_extension(f'cogs.{cog}')
   print(f"Loaded {cog}.py")
 
-keep_alive
+keep_alive()
 bot.run("MTExNTY0MTQyMTY1MTc4NzgzNg.GOYjxU.57VoHKzxGu-qjJZRcnyWsb_FDJn3aTkAGPMbSs")
