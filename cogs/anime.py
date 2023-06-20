@@ -114,18 +114,7 @@ class Anime(commands.Cog):
         slapEmbed.set_image(url = gif)
         await ctx.respond(user.mention, embed = slapEmbed)
 
-    # @images.command(name="cuddle", description="Fake cuddles the specified user with anime cuddles")
-    # async def cuddle(self, ctx, user: Option(discord.Member, description="Fake Cuddle")):
-    #     gif = anime.get_sfw('cuddle')
-    #     cuddleEmbed = discord.Embed(
-    #         title=f"{ctx.author} cuddles {user}",
-    #         color=color
-    #     )
-    #     cuddleEmbed.set_image(url = gif)
-    #     await ctx.respond(embed = cuddleEmbed)
-        
     
-        
 
 def setup(bot):
     bot.add_cog(Anime(bot))
