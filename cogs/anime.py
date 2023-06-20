@@ -125,7 +125,16 @@ class Anime(commands.Cog):
         hugEmbed.set_image(url = gif)
         await ctx.respond(user.mention, embed = hugEmbed)
 
-    
+    @images.command(name="punch", description="Fake Punches the specified user with anime punches")
+    async def punch(self, ctx, user:Option(discord.Member, description="User to fake Punch")):
+        response = requests.get("https://kawaii.red/api/gif/punch?token=389306174119608321.q6cgFHPL6SSS1dCaczBj")
+        gif = response.json()["response"]
+        punchEmbed = discord.Embed(
+            title=f"{ctx.author} punched {user}",
+            color=color
+        )
+        punchEmbed.set_image(url=gif)
+        await ctx.respond(user.mention, embed = punchEmbed)
 
 def setup(bot):
     bot.add_cog(Anime(bot))
