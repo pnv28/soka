@@ -52,6 +52,10 @@ class Anime(commands.Cog):
             """
         )
         await ctx.respond(embed = searchEmbed)
+
+    @search.error
+    async def searcherror(ctx, error):
+        await ctx.respond("There was an error fetching this query")
         
 
 
