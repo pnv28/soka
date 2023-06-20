@@ -105,7 +105,7 @@ class Anime(commands.Cog):
         await ctx.respond(user.mention, embed = patEmbed)
 
     @images.command(name="slap", description="Fake Slaps the specified users with anime slaps")
-    async def slap(slef, ctx, user: Option(discord.Member, description="Person to fake slap")):
+    async def slap(self, ctx, user: Option(discord.Member, description="Person to fake slap")):
         gif = anime.get_sfw('slap')
         slapEmbed = discord.Embed(
             title=f"{ctx.author} slapped {user}",
@@ -113,6 +113,17 @@ class Anime(commands.Cog):
         )
         slapEmbed.set_image(url = gif)
         await ctx.respond(user.mention, embed = slapEmbed)
+    
+    @images.command(name="hug", description="Fake Hugs the specified users with anime hugs")
+    async def hug(self, ctx , user: Option(discord.Member, description="User to fake hug")):
+        response = requests.get("https://kawaii.red/api/gif/hug?token=389306174119608321.q6cgFHPL6SSS1dCaczBj")
+        gif = response.json()["response"]
+        hugEmbed = discord.Embed(
+            title=f"{ctx.author} hugged {user}",
+            color = color
+        )
+        hugEmbed.set_image(url = gif)
+        await ctx.respond(user.mention, embed = hugEmbed)
 
     
 
