@@ -1,0 +1,2 @@
+2023-06-23 15:36:10,766:DEBUG:discord.client: on_ready has successfully been registered as an event
+2023-06-23 15:36:10,766:DEBUG:discord.client: on_application_command_error has successfully been registered as an event
