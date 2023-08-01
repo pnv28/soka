@@ -5,8 +5,6 @@ from discord.ext import commands
 from discord.ext.commands import MissingPermissions
 from keep_alive import keep_alive
 
-#token = os.environ['token']
-
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
